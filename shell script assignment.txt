@@ -1,0 +1,144 @@
+
+1.
+echo "`grep "~30[1-5][0-9]~" empdata`"
+
+2.
+
+echo "`grep "~Nirmala~" empdata`"
+
+3.
+echo "`grep "^S" empdata`"
+
+4.grep ",Delhi~">delhi_wallas
+
+5.
+grep "S1\|S2" empdata
+//expression in question matches only one character in the character class-i.e S or 1 or 2 and empdata is the name of file 
+and it should be present outside " "
+
+
+6.
+echo "enter string"
+read string
+len=`echo $string|wc -c`
+length=`expr $len - 1`
+while [ $length -ne 0 ]
+	do
+	letter=`echo $string|cut -c $length
+	finalstring=$finalstring$letter
+	length=`expr $length - 1`
+	done
+echo "$finalstring"
+
+7.
+VAL=20
+VAL=`expr $VAL \* 5`
+echo "$VAL"
+
+8.
+mkdir backup
+//script
+if [ $# -gt 1 -o $# -lt 1 ]
+        then
+                echo "Please enter one argument"
+                exit
+fi
+        num=`ls *.$1|wc -l`
+        if [ $num = 0 ]
+                then
+                        echo "No files with matching extension"
+                        exit
+        fi
+        var=`ls *.$1`
+        for files in $var
+        do
+                echo "Do you wish to move $files to directory y/n"
+                read ans
+                if [ $ans = 'y' -o $ans = 'Y' ]
+                        then
+                        echo "Do you wish to move with same name"
+                        read choice
+                        if [ $choice = 'y' -o $choice = 'Y' ]
+                                then
+                                echo "`mv $files backup/`"
+                        else
+                        echo "enter name"
+                        read name
+                        echo "`mv $files backup/$name`"
+                        fi
+                fi
+        done
+
+
+9.
+if [ $# -gt 1 ]
+	then 
+		echo "usage:list-type<argument>"
+		exit
+fi
+if [ $# -lt 1 ]
+	then 
+		echo "enter one argument"
+		exit
+fi
+if ! [ -d $1 ]
+		then
+		echo "file not directory,cannot be displayed"
+		exit
+fi
+if [ $# -eq 1 -a -d $1 ]
+	then
+	echo "select choice"
+	echo "Press a for long listing of files"
+	echo "Press b for displaying hidden files"
+	echo "Press c for displaying directory files"
+	echo "Press d for exit"
+	read choice
+	case $choice in
+	'a')
+	echo "`ls -l`";;
+	'b')
+	echo "`ls -l -a`";;
+	'c')
+	echo  "`ls -l|grep "^d"`";;
+	'd')
+	exit;;
+	*) echo "invalid choice"
+	esac
+
+fi
+
+
+
+10. 
+//vi DELSTAR.sh			//creates shell script
+//in editor press i for insert mode
+echo "enter filename"
+read filename
+count=0
+delfiles=0
+if ! [ -d $filename -a -r $filename -a -w $filename ]
+then
+	echo "invalid input"
+	exit
+fi
+
+	for files in `ls -l $filename|grep "^-"|tr -s " "|cut -f 9 -d " "`
+	do		
+		count=`expr $count + 1`
+		echo "$files"
+		if [ -w ./$filename/$files ]
+			then
+				echo "Delete file?press y/n"
+				read ans
+				if [  $ans = 'y' -o $ans = 'Y' ]
+					then
+						`rm ./$filename/$files`
+						delfiles=`expr $delfiles + 1`
+				fi
+		fi
+	done
+ 
+echo "Total number of ordinary files remaining in the directory :`expr $count - $delfiles` and they are `ls -l filename|grep "^-"|cut -f 9 -d " "` " 
+echo "Total number of ordinary files deleted from the directory:$delfiles"
+		
