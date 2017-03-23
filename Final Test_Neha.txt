@@ -1,0 +1,232 @@
+1) vi stringmatch.sh
+--Insert--
+if [ $# -lt 1 ]
+	echo "Usage: <StringManipulation> <string>"
+	exit
+fi
+ans='y'
+len=`echo $1|wc -c`
+length=`expr $len - 1`
+while [ $ans = 'y' -o $ans = 'Y' ]
+do
+	
+	echo "1. First occurrence of a letter in a string"
+
+	echo "2. Find substring"
+
+	echo "3. Exit"
+	echo "Please select a choice"
+	read choice
+	case $choice in
+	1) echo "Please enter a letter whose first occurence is to be displayed"
+	   read letter
+	   charposition=1
+	   strlength=$length
+	   while [ $charposition -le $strlength ]
+	    do
+			char=`echo $1|cut -c $charposition`
+		if [ $char = $letter ]
+		then
+			echo "character position is $charposition"
+			
+		fi
+		charposition=`expr $charposition + 1`
+	    done
+	;;
+	2) echo "enter starting index"
+	   read index
+	   echo "enter number of characters to be extracted"
+	   read number
+	   charposition=1
+	   while [ $charposition -ne $index ]
+	    do
+		charposition=`expr $charposition + 1`
+	    done
+	   count=1	
+	   while [ $charposition -le $length -a $count -le $number ]
+	    do
+	   	character=`echo $1|cut -c $charposition`
+		finalstring=$finalstring$character
+		charposition=`expr $charposition + 1`
+		count=`expr $count + 1`
+            done
+		echo "Substring is $finalstring"
+		;;
+	3) echo "Thank You"
+	   exit ;;
+	*) echo "invalid input.Please enter again"
+	
+	esac
+
+	echo "Do you want to continue"
+	echo "Type y/Y for yes"
+	echo "Type n/N for no"
+	read ans
+done  
+if [ $ans = 'n' -o $ans = 'N' ]
+	then
+		exit
+else
+	echo "Invalid choice"
+	exit
+fi
+
+
+3) select ord_no,purch_amt,ord_date from Salesman,Orders where Salesman.salesman_id=Orders.salesman_id and Salesman.name='James Hoog' 
+
+
+Write a query to display all the orders from the orders table issued by the salesman 'James Hoog'
+
+4) select count(Customers.customer_id) from Customers where Customers.grade>(select avg(Customers.grade) from Customers where city='New York')
+
+
+Write a query to count the customers with grades above New York's average. 
+
+
+5) select ord_no,purch_amt,ord_date from Orders where purch_amt>=(select avg(purch_amt) from Orders GROUP BY ord_no)
+
+
+Write a query to find all orders with order amounts which is on or above-average amounts for their customers.
+
+6) 
+User.java
+public class User
+{
+	private String username;
+	public User(String name)
+	{
+		this.username=name;
+	}
+	public String getUsername()
+	{
+		System.out.println(this.username);
+	} 
+	public void setUsername(String username)
+	{
+		this.username=username;
+	}
+
+	public String toString()
+	{
+		return ""User "+username";
+	}
+}
+
+
+interface-InstrumentMethods
+public interface InstrumentMethods
+{
+	String play();
+}
+
+
+class-Violin.java
+public class Violin implements InstrumentMethods
+{
+	@Override
+	public String play()
+	{
+		System.out.println("Violin");
+	}
+
+}
+
+
+class-Guitar.java
+public class Guitar implements InstrumentMethods
+{
+	@Override
+	public String play()
+	{
+		System.out.println("Guitar");
+	}
+
+}
+
+
+
+class-Drum.java
+public class Drum implements InstrumentMethods
+{
+	@Override
+	public String play()
+	{
+		System.out.println("Drum");
+	}
+
+}
+
+
+class-Menu.java
+public class Menu
+{	ArrayList<String> list=new Arraylist<String>();
+	int exit=0;
+	public static void main throws IOException(String[] args)
+	{
+		BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter your name");
+		do 
+		{
+			try{
+			String name=reader.readLine();
+			User user=new User();
+			user.setUsername(name);
+			System.out.println("Hi "+user.getUsername+" Please select the Instruments for the orchestra");
+			System.out.println("Type 1 for Violin");
+			System.out.println("Type 2 for Guitar");
+			System.out.println("Type 3 for Drum");
+			System.out.println("Type 4 for Exit");
+			System.out.println("Enter choice");
+			String choiceValue=reader.readLine();
+			int choice=Integer.parseInt(choiceValue);
+			switch(choice)
+			{
+				case 1: Violin violin=new Violin();
+					violin.play();
+					list.add("violin");
+					break;
+				case 2: Guitar guitar=new Guitar();
+					guitar.play();
+					list.add("guitar");
+					break;
+				case 3: Drum drum=new Drum();
+					drum.play();
+					list.add("drum");
+					break;
+				case 4: System.out.println("Thank you for choosing instruments");
+					Iterator iterator=list.iterator();
+					while(iterator.hasNext())
+					{
+						System.out.println(iterator.next());
+					}
+					list.clear();
+					System.exit(0);
+				default: System.out.println("Invalid choice.Please enter again");
+				
+			}
+			System.out.println("Do you want to select more instruments");
+			System.out.println("Press y/Y for yes");
+			System.out.println("Press n/N for no");
+			String userChoice=reader.readLine();
+			switch(userChoice)
+			{
+				case 'y':
+				case 'Y':exit=0;
+					break;
+				case 'n':
+				case 'N':exit=1;
+					break;
+				default: System.out.println("Invalid choice.Please enter again");
+			}
+			
+			}
+			catch(InputMismatchException e)
+			{
+				System.out.println("Invalid choice.Please enter again");
+			}
+		
+		}while(exit!=1);
+	}
+
+
+}
