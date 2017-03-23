@@ -1,0 +1,128 @@
+1) ER modelling is a pictorial representation of the relation between different entities i.e the requirements are modelled here pictorially.
+It also models the attributes of various entities.
+Entities are real world objects which have varoius features that are described by attributes.
+The type of association between entities(aggregation) and their cardinalities(1:1,1:N,M:1,M:N) are modelled here.
+
+Benefits-
+1. We get a clear picture about the enacting entities
+2. It lists the attributes of entities (attributes-derived,single valued,multi valued)
+3. It clearly models the relation between entities and the participation of entities in the relation(total or partial participation)
+4. Designing becomes easier if we have the clear pictorial representation of requirements in the form of ER diagram
+5. Enhancing the scope of project at a later stage becomes easier if we have a clear idea of existing relations
+
+
+Benefits in our project-
+ER model helped in our project
+1. Modelling the ER diagram helped us to clearly identify the entities participating.
+2. We could clearly recognise how each entity can be described through its attributes.
+3. Realtions betweeen the entities helped us to identify the dependencies between the entities.
+4. We could get a clear picture to reduce the dependencies between the entities to better modularise it.
+5. One look at the ER model gives a clear picture to form the tables and normalise it
+6. Designing the classes from the ER model was an easier approach to the project
+7. ER diagram helps in freezing the design so that we can build the project from there.
+
+
+2) Primary key- is the candidate key which uniquely identifies each tuple in a table.There can be more than one primary key in a table and this is called composite primary key
+
+Foreign key- is the key in table that references the primary key in the same or in a different table.This maintains the referential integrity constraint.
+i.e any changes made to the table having primary key must be reflected in the table having the foreign key.
+
+eg-
+table-  item
+Attributes- item code,item name,unit,price per unit
+
+Here item code is the primary key in the table item
+
+eg-
+table-  bulk zone
+Attributes - item code,quantity,date of manufacture,date of expiry
+
+Here item code is the foreign key in bulk zone table which references the item code primary key in the item table.
+
+
+3) 
+Normalisation is the process used to remove redundancies in database and is also used to remove insertion,updation,deletion anomalies,thus making the table optimised
+1NF- all the values in the table must be atomic
+2NF- all the non key attributes must be fully functionally dependant on the primary key
+3NF- there should not be any dependencies between non key attributes
+
+eg a) 1NF -consider
+item name 	quantity
+Bru,Tetley	5
+
+this is not in 1NF since values are not atomic.Thus we normalise as
+item name 	quantity
+Bru		5
+Tetley		5
+	
+eg b) 2NF -consider item table-
+item code,warehouse id,item name,unit,price per unit,warehouse city
+
+Here item name is not dependent on warehouse id and warehouse city is not dependent on item code
+Thus we split it as
+
+Item-item code,item name,unit,price per unit
+
+Warehouse-warehouse id,warehouse city
+
+eg c) 3NF- consider
+item code,item name,unit,date of manufacture,date of expiry
+
+Since date of expiry depends on date of manufacture
+
+we split as-
+
+item-item code,item name,unit
+
+inventory-item code,date of manufacture,date of expiry
+
+
+4) 
+Join operation in SQL is used to display values from various tables by joining them on a common key.Types are-
+
+Equijoin - between two tables gives us the tuples that are having values in both tables(i.e Null value in any table-that tuple is ignored)
+	
+consider-
+
+author-authorId,authorName
+title-titleId,titleName
+publisher-publisherId
+titleReference-authorId,titleId,publisherId
+
+Left Outer join- gives all the tuples in the left table irrespective of whether it has null value for that tuple on the right table (wrt to the join)
+eg-
+select * from author left outer join item on author.authorId=titleReference.authorId and titleReference.tilteId=title.titleId;
+This displays all the authors whether they have authored a book or not
+
+Right outer join-gives all the values in the right table irrespective of whether it has null value for that tuple on the left table  (wrt to the join)
+eg-
+select * from publisher right outer join title on publisher.publisherId=titleReference.publisherId and titleReference.tilteId=title.titleId;
+This displays all the books whether they have been published or not
+
+
+5) select Employees.FirstName,Employees.Salary from Employees
+where Employees.Salary >(select avg(Employees.Salary) from Employees)
+ORDER BY Employees.Salary desc;
+
+
+6)select Employees.FirstName,Employees.LastName,Employees.DOJ from Employees
+where Employees.LastName LIKE 'Sen%' 
+OR
+Employees.LastName LIKE 'Roy%'
+ORDER BY  Employees.DOJ asc;
+
+
+7) One to One- if one entity in an entity set is related to one entity in another entity set in a relation,it is One to One
+eg-
+Warehouse -present in- City  (considering the assumption made in the project that each city can have one warehouse)
+Here 1 Warehouse is present in 1 city
+
+One to many- if one entity in an entity set is related to many entities in another entity set in a relation,it is one to Many
+eg-
+Item - has -category
+Here 1 Item can have N categories
+
+Many to Many- if many entities in an entity set is related to amny entities in another entity set in a relation, it is Many to Many
+eg-
+Item-present in-warehouse
+Here M items can be present in N warehouses
